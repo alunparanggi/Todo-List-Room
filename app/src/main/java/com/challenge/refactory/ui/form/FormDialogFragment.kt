@@ -62,7 +62,8 @@ class FormDialogFragment(private val title: String, private val callback: () -> 
             dialog?.dismiss()
         }
         binding.btnSave.setOnClickListener {
-            callback.invoke()
+            addNewItem()
+            dialog?.dismiss()
         }
 
         binding.btnDate.setOnClickListener { showDatePicker() }

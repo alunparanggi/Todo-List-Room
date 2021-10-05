@@ -5,9 +5,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import com.challenge.refactory.App
 import com.challenge.refactory.R
 import com.challenge.refactory.databinding.ActivityDashboardBinding
+import com.challenge.refactory.ui.dashboard.adapter.TaskAdapter
 import com.challenge.refactory.ui.form.FormDialogFragment
 import com.challenge.refactory.ui.profile.ProfileActivity
 
@@ -15,8 +19,10 @@ class DashboardActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDashboardBinding
 
-    private val viewModel: TaskViewModel by lazy {
-        ViewModelProvider(this).get(TaskViewModel::class.java)
+    private val viewModel:TaskViewModel by viewModels() {
+        TaskViewModelFactory(
+            (application as App).database.itemDao()
+        )
     }
 
     companion object{
@@ -41,6 +47,12 @@ class DashboardActivity : AppCompatActivity() {
         binding.ivProfile.setOnClickListener { navigateToProfile() }
         binding.fabAddTask.setOnClickListener { openDialogFragment() }
 
+        val adapter = TaskAdapter()
+        binding.rvTask.adapter = adapter
+
+        viewModel.allTasks.observe(this){ items->
+            items.let { adapter.submitList(it) }
+        }
     }
 
     private fun navigateToProfile(){
