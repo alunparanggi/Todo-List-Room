@@ -102,7 +102,7 @@ class FormDialogFragment(private val title: String, private val callback: () -> 
 
     private fun showTimePicker(textView: TextView){
         getDateTimeCalendar()
-        val timePickerDialog = TimePickerDialog(requireContext(), R.style.DatePicker,  { time, hourOfDay, minute ->
+        val timePickerDialog = TimePickerDialog(requireContext(), R.style.DatePicker,  { _, hourOfDay, minute ->
             savedHour = hourOfDay
             savedMinute = minute
 

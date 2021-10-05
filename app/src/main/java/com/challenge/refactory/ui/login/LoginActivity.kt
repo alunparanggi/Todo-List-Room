@@ -57,7 +57,6 @@ class LoginActivity : AppCompatActivity() {
         val firebaseUser = firebaseAuth.currentUser
         if(firebaseUser != null){
             DashboardActivity.startActivity(this, firebaseUser.email)
-//            startActivity(Intent(this, DashboardActivity::class.java))
             finish()
         }
 
@@ -98,7 +97,6 @@ class LoginActivity : AppCompatActivity() {
                 }
 
                 DashboardActivity.startActivity(this, email)
-//                startActivity(Intent(this, DashboardActivity::class.java))
                 finish()
             }
             .addOnFailureListener{
